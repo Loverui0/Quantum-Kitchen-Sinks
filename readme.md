@@ -2,7 +2,7 @@
 
 A simple implementation of the approach presented by Christopher M. Wilson, J. S. Otterbach, Nikolas Tezak, Robert S. Smith, Gavin E. Crooks, and Marcus P. da Silva in their paper called Quantum Kitchen Sinks (arXiv:1806.08321) used on a toy example. 
 
-The core idea of this approach is to have a certain amount of quantum circuits with gates that are parametrized by classical input. The circuits are each applied to the state <img src="https://latex.codecogs.com/svg.latex?|0>^{\otimes n}"/> and the results are then measured. The array of measurements is processed such that the measured state is one-hot encoded and this sparse object is used as input to a feedforward neural network with linear activations. 
+The core idea of this approach is to have a certain amount of quantum circuits with gates that are parametrized by classical input. The circuits are each applied to the zero-state and the results are then measured. The array of measurements is processed such that the measured state is one-hot encoded and this sparse object is used as input to a feedforward neural network with linear activations. 
 
 (PLEASE NOTE: Currently in this implementation the measurements are not implemented according to the Born rule, but rather the result is always the possibility with the highest probability.) 
 
