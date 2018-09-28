@@ -4,8 +4,6 @@ A simple implementation of the approach presented by Christopher M. Wilson, J. S
 
 The core idea of this approach is to have a certain amount of quantum circuits with gates that are parametrized by classical input. The circuits are each applied to the zero-state and the results are then measured. The array of measurements is processed such that the measured state is one-hot encoded and this sparse object is used as input to a feedforward neural network with linear activations. 
 
-(PLEASE NOTE: Currently in this implementation the measurements are not implemented according to the Born rule, but rather the result is always the possibility with the highest probability.) 
-
 The classical inputs <img src="https://latex.codecogs.com/svg.latex?x"/> that determine the quantum gates are preprocessed linearly with a mainly random (normal) matrix <img src="https://latex.codecogs.com/svg.latex?\Omega"/> and a random (uniform) vector <img src="https://latex.codecogs.com/svg.latex?\beta"/> such that circuit parameters can be calculated as
 
 <img src="https://latex.codecogs.com/svg.latex?\theta=\Omega\,x+\beta"/>.

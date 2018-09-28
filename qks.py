@@ -12,7 +12,7 @@ from mpl_toolkits.mplot3d import Axes3D
 # Parameters
 sigma_squared = 1
 learning_rate = 0.01
-episodes = 500
+episodes = 400
 
 class preprocessor(Layer):
     # Linear preprocessing layer with preinitialized random episodes.
@@ -91,13 +91,20 @@ class kernel(Layer):
         # Calculate transition probabilities.
         probabilities = tf.cast(tf.square(tf.abs(state_out)),dtype=tf.float32)
 
-        # Measure state.
-        # PLEASE NOTE: 
-        # This is not a valid quantum measurement as governed by the Born rule.
-        # Instead it is the measurement result with highest probability
-        # ------------
-        measurement = probabilities/tf.reduce_max(probabilities,axis=2,keepdims=True)
-        measurement = tf.floor(measurement)
+        # Prepare list of collapsed states
+        measurements = []
+
+        # Iterate over quantum kernels
+        for e in range(episodes):
+
+            # Get a weighted random choice from the state probabilities
+            choice = tf.multinomial(tf.log(probabilities[:,e]), 1)
+
+            # Append collapsed (one hot) state to measurements
+            measurements.append(tf.one_hot(choice, 4))
+
+        # Stack measurements of individual kernels to full tensor
+        measurement = tf.stack(measurements, axis=1)
         return measurement
 
     def compute_output_shape(self, input_shape):
@@ -153,7 +160,7 @@ class quantum_kitchen_sink():
 
 # Train a quantum kitchen sink.
 QKS = quantum_kitchen_sink()
-teachers = QKS.train(1000)
+teachers = QKS.train(2000)
 
 # Initialize plotting arrays.
 X,Y,C = [],[],[]
